@@ -35,11 +35,14 @@ func main() {
 	}()
 
 	Session, _ = discordgo.New()
-	defer Session.Close()
+	defer func(Session *discordgo.Session) {
+		err := Session.Close()
+		if err != nil {
 
-	if len(modules) > 0 {
-		LoadModule(Session, modules)
-	}
+		}
+	}(Session)
+
+	LoadModule(Session, modules)
 
 	OpenConnection(token)
 

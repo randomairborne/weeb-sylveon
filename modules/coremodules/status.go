@@ -15,23 +15,24 @@ func RunStatusCommand(ds *discordgo.Session, mc *discordgo.MessageCreate, _ stri
 		if err != nil {
 			logger.Err().Println(err.Error())
 		}
-		err = ds.UpdateGameStatus(0, strings.Join(args, " "))
-		if err != nil {
-			err := api.SendWithSelfDelete(ds, mc.ChannelID, 15, "Failed to update status: "+err.Error())
-			if err != nil {
-				return
-			}
-		}
-		err = ioutil.WriteFile("status.text", []byte(strings.Join(args, " ")), fs.FileMode(0777))
-		if err != nil {
-			err := api.SendWithSelfDelete(ds, mc.ChannelID, 15, "Failed to write to file: "+err.Error())
-			if err != nil {
-				return
-			}
-		}
-		_, err = ds.ChannelMessageSendReply(mc.ChannelID, "Changed status to "+strings.Join(args, " "), mc.Reference())
+		return
+	}
+	err := ds.UpdateGameStatus(0, strings.Join(args, " "))
+	if err != nil {
+		err := api.SendWithSelfDelete(ds, mc.ChannelID, 15, "Failed to update status: "+err.Error())
 		if err != nil {
 			return
 		}
+	}
+	err = ioutil.WriteFile("status.text", []byte(strings.Join(args, " ")), fs.FileMode(0777))
+	if err != nil {
+		err := api.SendWithSelfDelete(ds, mc.ChannelID, 15, "Failed to write to file: "+err.Error())
+		if err != nil {
+			return
+		}
+	}
+	_, err = ds.ChannelMessageSendReply(mc.ChannelID, "Changed status to "+strings.Join(args, " "), mc.Reference())
+	if err != nil {
+		return
 	}
 }

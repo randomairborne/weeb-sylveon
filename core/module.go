@@ -21,7 +21,7 @@ func LoadModule(ds *discordgo.Session, modules []string) {
 			logger.Err().Printf("No module with name %s\n", v)
 		}
 	}
-
+	println(loadedModules)
 	for k, v := range loadedModules {
 		v.Load(ds)
 		logger.Out().Printf("Loaded %s\n", k)
