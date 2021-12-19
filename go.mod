@@ -1,4 +1,4 @@
-module github.com/lordralex/absol
+module github.com/randomairborne/eevee
 
 go 1.15
 

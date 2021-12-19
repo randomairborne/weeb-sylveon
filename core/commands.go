@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/bwmarrin/discordgo"
-	"github.com/lordralex/absol/api"
+	"github.com/randomairborne/eevee/api"
 	"github.com/spf13/viper"
 	"strings"
 )
@@ -17,7 +17,7 @@ func EnableCommands(session *discordgo.Session) {
 	commandPrefix = viper.GetString("prefix")
 
 	if commandPrefix == "" {
-		commandPrefix = "!?"
+		commandPrefix = "eevee!"
 	}
 
 	session.AddHandler(onMessageCommand)

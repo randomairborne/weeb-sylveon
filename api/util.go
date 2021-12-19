@@ -2,7 +2,8 @@ package api
 
 import (
 	"github.com/bwmarrin/discordgo"
-	"github.com/lordralex/absol/api/logger"
+	"github.com/randomairborne/eevee/api/logger"
+	"time"
 )
 
 func GetGuild(ds *discordgo.Session, guildId string) *discordgo.Guild {
@@ -41,4 +42,16 @@ func GetChannel(ds *discordgo.Session, channelId string) *discordgo.Channel {
 	}
 
 	return c
+}
+func SendWithSelfDelete(ds *discordgo.Session, channelId string, duration int, message string) error {
+	m, err := ds.ChannelMessageSend(channelId, message)
+	if err != nil {
+		return err
+	}
+
+	go func(ch, id string, session *discordgo.Session) {
+		<-time.After(time.Duration(duration) * time.Second)
+		_ = ds.ChannelMessageDelete(channelId, m.ID)
+	}(channelId, m.ID, ds)
+	return nil
 }

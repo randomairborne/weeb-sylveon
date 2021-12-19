@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/bwmarrin/discordgo"
-	"github.com/lordralex/absol/api"
-	"github.com/lordralex/absol/api/logger"
+	"github.com/randomairborne/eevee/api"
+	"github.com/randomairborne/eevee/api/logger"
 	"github.com/spf13/viper"
 	"os"
 	"os/signal"
@@ -20,7 +20,7 @@ func main() {
 
 	modules := os.Args[1:]
 
-	token := viper.GetString("discord_token")
+	token := viper.GetString("TOKEN")
 
 	if token == "" {
 		logger.Err().Print("DISCORD_TOKEN must be set in the environment to run this process")

@@ -30,4 +30,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/lordralex/absol:latest
+          tags: ghcr.io/randomairborne/eevee:latest
