@@ -23,7 +23,7 @@ func main() {
 	token := viper.GetString("TOKEN")
 
 	if token == "" {
-		logger.Err().Print("DISCORD_TOKEN must be set in the environment to run this process")
+		logger.Err().Print("TOKEN must be set in the environment to run this process")
 		return
 	}
 
