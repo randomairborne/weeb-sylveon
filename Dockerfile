@@ -6,14 +6,13 @@ FROM golang:alpine AS builder
 WORKDIR /build
 COPY . .
 
-RUN go build -o absol -v github.com/randomairborne/eevee/core
+RUN go build -o eevee -v github.com/randomairborne/eevee/core
 
 ###
 # Now generate our smaller image
 ###
 FROM alpine
 
-COPY --from=builder /build/absol /go/bin/absol
+COPY --from=builder /build/eevee /go/bin/eevee
 
 ENTRYPOINT ["/go/bin/absol"]
-CMD ["alert", "cleaner", "factoids", "log", "twitch", "hjt", "search", "mcping"]
