@@ -12,5 +12,7 @@ type Module struct {
 func (*Module) Load(_ *discordgo.Session) {
 	api.RegisterCommand("ping", RunPingCommand)
 	api.RegisterCommand("status", RunStatusCommand)
+	api.RegisterCommand("h", RunHelpCommand)
+	api.RegisterCommand("help", RunHelpCommand)
 	api.RegisterIntentNeed(discordgo.IntentsGuildMessages, discordgo.IntentsDirectMessages)
 }

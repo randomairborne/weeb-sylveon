@@ -1,4 +1,4 @@
-package hugs
+package love
 
 import (
 	"encoding/json"
@@ -6,27 +6,11 @@ import (
 	"github.com/randomairborne/eevee/api"
 	"io/ioutil"
 	"net/http"
-	"regexp"
 	"strings"
 )
 
-type Module struct {
-	api.Module
-}
-
-var userRegex, _ = regexp.Compile("/<@!?(\\d{17,19})>/g")
-
-type nekosApiResponseJson struct {
-	URL string `json:"url"`
-}
-
-func (*Module) Load(_ *discordgo.Session) {
-	api.RegisterCommand("hug", RunHugCommand)
-	api.RegisterIntentNeed(discordgo.IntentsGuildMessages, discordgo.IntentsDirectMessages)
-}
-
-func RunHugCommand(session *discordgo.Session, message *discordgo.MessageCreate, _ string, args []string) {
-	resp, err := http.Get("https://nekos.life/api/v2/img/hug")
+func RunKissCommand(session *discordgo.Session, message *discordgo.MessageCreate, _ string, args []string) {
+	resp, err := http.Get("https://nekos.life/api/v2/img/kiss")
 	if err != nil {
 		err := api.SendWithSelfDelete(session, message.ChannelID, 10, "Failed to query API, error: `"+err.Error()+"`")
 		if err != nil {
@@ -43,7 +27,7 @@ func RunHugCommand(session *discordgo.Session, message *discordgo.MessageCreate,
 		return
 	}
 	embed := &discordgo.MessageEmbed{
-		Description: "Aww, " + message.Author.Mention() + " hugs you!",
+		Description: "Aww, " + message.Author.Mention() + " kisses you!",
 		Image: &discordgo.MessageEmbedImage{
 			URL: response.URL,
 		},
