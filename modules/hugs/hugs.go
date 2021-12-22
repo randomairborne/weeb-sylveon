@@ -6,12 +6,15 @@ import (
 	"github.com/randomairborne/eevee/api"
 	"io/ioutil"
 	"net/http"
+	"regexp"
 	"strings"
 )
 
 type Module struct {
 	api.Module
 }
+
+var userRegex, _ = regexp.Compile("/<@!?(\\d{17,19})>/g")
 
 type nekosApiResponseJson struct {
 	URL string `json:"url"`
@@ -47,6 +50,19 @@ func RunHugCommand(session *discordgo.Session, message *discordgo.MessageCreate,
 	}
 	var send *discordgo.MessageSend
 	if len(args) > 0 {
+		// check if valid mention
+		if !userRegex.MatchString(args[0]) {
+			err := api.SendWithSelfDelete(session, message.ChannelID, 10, "That's not a valid mention!")
+			if err != nil {
+				return
+			}
+		}
+		if err != nil {
+			err := api.SendWithSelfDelete(session, message.ChannelID, 10, "Regex matching failed, `"+err.Error()+"`")
+			if err != nil {
+				return
+			}
+		}
 		// This gets the users ID so it'll ping them
 		user := strings.Trim(args[0], "&@!<>")
 		send = &discordgo.MessageSend{
