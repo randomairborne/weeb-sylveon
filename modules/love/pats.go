@@ -10,7 +10,7 @@ import (
 )
 
 func RunPatsCommand(session *discordgo.Session, message *discordgo.MessageCreate, _ string, args []string) {
-	resp, err := http.Get("https://nekos.life/api/v2/img/hug")
+	resp, err := http.Get("https://nekos.life/api/v2/img/pat")
 	if err != nil {
 		err := api.SendWithSelfDelete(session, message.ChannelID, 10, "Failed to query API, error: `"+err.Error()+"`")
 		if err != nil {
