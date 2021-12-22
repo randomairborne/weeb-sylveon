@@ -6,7 +6,6 @@ import (
 )
 
 func RunHelpCommand(session *discordgo.Session, message *discordgo.MessageCreate, _ string, _ []string) {
-	_ = session.ChannelMessageDelete(message.ChannelID, message.ID)
 	prefix := viper.GetString("prefix")
 	if prefix == "" {
 		prefix = "eevee!"
@@ -26,6 +25,6 @@ func RunHelpCommand(session *discordgo.Session, message *discordgo.MessageCreate
 	}
 	_, err := session.ChannelMessageSendComplex(message.ChannelID, helpmessage)
 	if err != nil {
-		return
+		println(err.Error())
 	}
 }
