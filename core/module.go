@@ -5,6 +5,7 @@ import (
 	"github.com/randomairborne/eevee/api"
 	"github.com/randomairborne/eevee/api/logger"
 	"github.com/randomairborne/eevee/modules/coremodules"
+	"github.com/randomairborne/eevee/modules/hugs"
 	"strings"
 )
 
@@ -15,8 +16,8 @@ func LoadModule(ds *discordgo.Session, modules []string) {
 	for _, v := range modules {
 		logger.Out().Printf("Loading %s\n", v)
 		switch strings.ToLower(v) {
-		// case "hugs":
-		// 	loadedModules["coremodules"] = &coremodules.Module{}
+		case "hugs":
+			loadedModules["hugs"] = &hugs.Module{}
 		default:
 			logger.Err().Printf("No module with name %s\n", v)
 		}
